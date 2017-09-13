@@ -5,23 +5,33 @@ module Flox
 open System
 open System.IO
 
-let run code =
+let run code scope =
     let tokens = Scanner.scan code
     for token in tokens do
         printfn "%A" token
+    let (ast, rest) = Parser.statement (tokens |> List.map fst)
+    printfn "%A" ast
+    let value, scope = Evaluator.execute ast scope
+    match value with
+    | Some value -> printfn "= %A" value
+    | None -> ()
+    scope
 
 let runFile fname =
     let data = File.ReadAllText(fname)
-    run(data)
+    run data |> ignore
+    ()
 
-let rec runPrompt () =
-    printf "> "
-    let code = Console.ReadLine ()
-    if code <> "q" then
-        run(code)
-        runPrompt()
-    else
-        ()
+let runPrompt () =
+    let rec runPrompt' scope =
+        printf "> "
+        let code = Console.ReadLine ()
+        if code <> null && code <> "q" then
+            let scope = run code scope
+            runPrompt' scope
+        else
+            ()
+    runPrompt' Map.empty
 
 [<EntryPoint>]
 let main argv =

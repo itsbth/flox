@@ -4,7 +4,10 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AST.fs" />
+    <Compile Include="Evaluator.fs" />
     <Compile Include="Scanner.fs" />
+    <Compile Include="Parser.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 </Project>
