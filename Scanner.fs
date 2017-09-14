@@ -95,6 +95,11 @@ let scan (code : string) =
                 match acc |> string_of_acc with
                 | "var" -> VAR
                 | "print" -> PRINT
+                | "if" -> IF
+                | "else" -> ELSE
+                | "true" -> TRUE
+                | "false" -> FALSE
+                | "nil" -> NIL
                 | other -> IDENTIFIER other
             
             let (rest, pos, str) = word' (code, pos) []

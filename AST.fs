@@ -30,8 +30,11 @@ type Expr =
     | BinOp of BinOp * Expr * Expr
     | UnOp of UnOp * Expr
     | Call of Expr * Expr list
+    | Assignment of string * Expr
 
 type Statement =
     | VariableDeclaration of string * Expr
     | Print of Expr
     | Expression of Expr
+    | Block of Statement list
+    | IfStatement of condition: Expr * ifTrue: Statement * ifFalse: Statement option

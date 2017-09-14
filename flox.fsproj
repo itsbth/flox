@@ -5,6 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AST.fs" />
+    <Compile Include="Scope.fs" />
     <Compile Include="Evaluator.fs" />
     <Compile Include="Scanner.fs" />
     <Compile Include="Parser.fs" />

@@ -9,9 +9,9 @@ let run code scope =
     let tokens = Scanner.scan code
     for token in tokens do
         printfn "%A" token
-    let (ast, rest) = Parser.statement (tokens |> List.map fst)
+    let ast = Parser.program (tokens |> List.map fst)
     printfn "%A" ast
-    let value, scope = Evaluator.execute ast scope
+    let (value, scope) = Seq.fold (fun (_, scope) stmnt -> Evaluator.execute stmnt scope) (Some AST.LNil, scope) ast
     match value with
     | Some value -> printfn "= %A" value
     | None -> ()
@@ -31,7 +31,7 @@ let runPrompt () =
             runPrompt' scope
         else
             ()
-    runPrompt' Map.empty
+    runPrompt' Scope.make
 
 [<EntryPoint>]
 let main argv =
